@@ -1,0 +1,24 @@
+{
+  "name": "yelp-camp",
+  "version": "1.0.0",
+  "description": "yelp camp v1",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atulr5124/yelp-camp.git"
+  },
+  "author": "Atul Rauthan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/atulr5124/yelp-camp/issues"
+  },
+  "homepage": "https://github.com/atulr5124/yelp-camp#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3"
+  }
+}

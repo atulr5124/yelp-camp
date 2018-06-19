@@ -5,9 +5,15 @@ app.use(bodyparser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
 
 var campgrounds = [
-	{name: "Salmon Creek", image:"https://pixabay.com/get/ec31b90f2af61c22d2524518b7444795ea76e5d004b014439cf2c67ea1eeb0_340.jpg"},
-	{name: "Granite Hills", image:"https://pixabay.com/get/e837b1072af4003ed1584d05fb1d4e97e07ee3d21cac104497f9c37ea0ebb6bd_340.jpg"},
-	{name: "Sacred Goat Mountain", image:"https://pixabay.com/get/e83db50a21f4073ed1584d05fb1d4e97e07ee3d21cac104497f9c37ea0ebb6bd_340.jpg"}
+	{name: "Salmon Creek", image:"http://source.unsplash.com/gcCcIy6Fc_M"},
+	{name: "Granite Hills", image:"http://source.unsplash.com/gcCcIy6Fc_M"},
+	{name: "Sacred Goat Mountain", image:"http://source.unsplash.com/gcCcIy6Fc_M"},
+	{name: "Salmon Creek", image:"http://source.unsplash.com/gcCcIy6Fc_M"},
+	{name: "Granite Hills", image:"http://source.unsplash.com/gcCcIy6Fc_M"},
+	{name: "Sacred Goat Mountain", image:"http://source.unsplash.com/gcCcIy6Fc_M"},
+	{name: "Salmon Creek", image:"http://source.unsplash.com/gcCcIy6Fc_M"},
+	{name: "Granite Hills", image:"http://source.unsplash.com/gcCcIy6Fc_M"},
+	{name: "Sacred Goat Mountain", image:"http://source.unsplash.com/gcCcIy6Fc_M"}
 	];
 
 app.get("/", function(req, res) {

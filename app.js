@@ -3,48 +3,22 @@ var express = require("express"),
 		bodyparser = require("body-parser"),
 		mongoose = require("mongoose"),
 		Campground = require("./models/campground"),
+		Comment = require("./models/comment"),
 		seedDB = require("./seeds");
-
-seedDB();
 
 // connecting to mongo db
 mongoose.connect("mongodb://localhost/yelp-camp");
 
 app.use(bodyparser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
+app.use(express.static(__dirname+"/public"));
 
-// Campground.create({name: "Granite Hills",
-// 				   image:"http://source.unsplash.com/gcCcIy6Fc_M",
-// 				   description: "Hills only made of granite. Star gazing recommended!"},
-// 				   function(err, campground) {
-// 					   if(err) {
-// 						   console.log(err);
-// 					   } else {
-// 						   console.log("Newly created campground");
-// 						   console.log(campground);
-// 					   }
-// 				   });
-
-// var campgrounds = [
-// 	{name: "Salmon Creek", image:"http://source.unsplash.com/gcCcIy6Fc_M"},
-// 	{name: "Granite Hills", image:"http://source.unsplash.com/gcCcIy6Fc_M"},
-// 	{name: "Sacred Goat Mountain", image:"http://source.unsplash.com/gcCcIy6Fc_M"},
-// 	{name: "Salmon Creek", image:"http://source.unsplash.com/gcCcIy6Fc_M"},
-// 	{name: "Granite Hills", image:"http://source.unsplash.com/gcCcIy6Fc_M"},
-// 	{name: "Sacred Goat Mountain", image:"http://source.unsplash.com/gcCcIy6Fc_M"},
-// 	{name: "Salmon Creek", image:"http://source.unsplash.com/gcCcIy6Fc_M"},
-// 	{name: "Granite Hills", image:"http://source.unsplash.com/gcCcIy6Fc_M"},
-// 	{name: "Sacred Goat Mountain", image:"http://source.unsplash.com/gcCcIy6Fc_M"}
-// 	];
+seedDB();
 
 // Landing page route
 app.get("/", function(req, res) {
 	res.render("landing");
 });
-
-// app.get("/campgrounds", function(req, res) {
-// 	res.render("campgrounds", {campgrounds: campgrounds});
-// });
 
 // INDEX - show all campgrounds
 app.get("/campgrounds", function(req, res) {
@@ -52,7 +26,7 @@ app.get("/campgrounds", function(req, res) {
 		if(err) {
 			console.log(err);
 		} else {
-			res.render("index",{campgrounds:allcampgrounds});
+			res.render("campgrounds/index",{campgrounds:allcampgrounds});
 		}
 	});
 });
@@ -77,16 +51,48 @@ app.post("/campgrounds", function(req, res) {
 
 // NEW - show form to create new campground
 app.get("/campgrounds/new", function(req, res) {
-	res.render("new");
+	res.render("campgrounds/new");
 });
 
 // SHOW - show information of a specific campground
 app.get("/campgrounds/:id", function(req, res) {
-	Campground.findById(req.params.id, function(err, foundCamp) {
+	Campground.findById(req.params.id).populate("comments").exec(function(err, foundCamp) {
 		if(err) {
 			console.log(err);
 		} else {
-			res.render("show", {campground: foundCamp});
+			res.render("campgrounds/show", {campground: foundCamp});
+		}
+	});
+});
+ 
+// ==========================================
+// Comments Routes
+// ==========================================
+
+app.get("/campgrounds/:id/comments/new", function(req, res) {
+	Campground.findById(req.params.id, function(err, campground) {
+		if(err) {
+			res.send(err);
+		} else {
+			res.render("comments/new", {campground: campground});
+		}
+	});
+});
+
+app.post("/campgrounds/:id/comments", function(req, res) {
+	Campground.findById(req.params.id, function(err, campground) {
+		if(err) {
+			res.send(err);
+		} else {
+			Comment.create(req.body.comment, function(err, comment) {
+				if(err) {
+					res.send(err);
+				} else {
+					campground.comments.push(comment);
+					campground.save();
+					res.redirect("/campgrounds/"+campground._id);
+				}
+			});
 		}
 	});
 });

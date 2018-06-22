@@ -1,0 +1,19 @@
+.card img {
+    width: 100%;
+}
+
+.card {
+    padding: 0;
+}
+
+.card .caption {
+    padding: 3%;
+}
+
+.card .text-right {
+    padding: 2%;
+}
+
+.card .row {
+    padding: 2%;
+}

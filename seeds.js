@@ -1,16 +1,17 @@
 var mongoose = require("mongoose");
 var Campground = require("./models/campground");
+var Comment = require("./models/comment");
 
 var data = [
     {name: "Cloud's Rest",
     image:"http://source.unsplash.com/gcCcIy6Fc_M",
-    description:"Welcome to cloud's rest."},
+    description:"Spicy jalapeno bacon ipsum dolor amet shankle shank burgdoggen drumstick ham hock picanha short ribs ham. Porchetta hamburger prosciutto chuck doner tenderloin pork. Pig strip steak jerky doner flank ball tip capicola pork. Tenderloin landjaeger sausage sirloin pig, filet mignon hamburger alcatra fatback bresaola pork belly jowl bacon ball tip. Sausage meatloaf cow filet mignon pork loin chuck."},
     {name: "Desert Mesa",
     image:"http://source.unsplash.com/y8Ngwq34_Ak",
-    description:"Welcome to Desert Mesa."},
+    description:"Spicy jalapeno bacon ipsum dolor amet shankle shank burgdoggen drumstick ham hock picanha short ribs ham. Porchetta hamburger prosciutto chuck doner tenderloin pork. Pig strip steak jerky doner flank ball tip capicola pork. Tenderloin landjaeger sausage sirloin pig, filet mignon hamburger alcatra fatback bresaola pork belly jowl bacon ball tip. Sausage meatloaf cow filet mignon pork loin chuck."},
     {name: "Canyon Floor",
     image:"http://source.unsplash.com/K9olx8OF36A",
-    description:"Welcome to canyon floor."}
+    description:"Spicy jalapeno bacon ipsum dolor amet shankle shank burgdoggen drumstick ham hock picanha short ribs ham. Porchetta hamburger prosciutto chuck doner tenderloin pork. Pig strip steak jerky doner flank ball tip capicola pork. Tenderloin landjaeger sausage sirloin pig, filet mignon hamburger alcatra fatback bresaola pork belly jowl bacon ball tip. Sausage meatloaf cow filet mignon pork loin chuck."}
 ];
 
 function seedDB() {

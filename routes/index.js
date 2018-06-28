@@ -26,7 +26,7 @@ router.post("/register", function(req, res) {
 			res.render("register");
 		} else {
 			passport.authenticate("local")(req, res, function() {
-				res.redirect("/login");
+				res.redirect("/campgrounds");
 			});
 		}
 	});

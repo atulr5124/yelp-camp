@@ -14,12 +14,16 @@ router.get("/", function(req, res) {
 });
 
 // CREATE - add new campground to database
-router.post("/", function(req, res) {
+router.post("/", isLoggedIn, function(req, res) {
 	// get data from the form and add it to campgrounds array
 	var name = req.body.name;
 	var image = req.body.image;
 	var desc = req.body.description;
-	var newCamp = {name:name, image:image, description: desc};
+	var author = {
+		id: req.user._id,
+		username: req.user.username
+	};
+	var newCamp = {name:name, image:image, description: desc, author: author};
 	// campgrounds.push(newCamp);
 	Campground.create(newCamp, function(err, newlyCreated) {
 		if(err) {
@@ -32,7 +36,7 @@ router.post("/", function(req, res) {
 });
 
 // NEW - show form to create new campground
-router.get("/new", function(req, res) {
+router.get("/new", isLoggedIn, function(req, res) {
 	res.render("campgrounds/new");
 });
 
@@ -46,6 +50,14 @@ router.get("/:id", function(req, res) {
 		}
 	});
 });
+
+// Middleware - checks for login
+function isLoggedIn(req, res, next) {
+	if(req.isAuthenticated()) {
+		return next();
+	}
+	res.redirect("/login");
+}
 
 module.exports = router;
  

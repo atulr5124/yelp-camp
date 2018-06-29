@@ -17,3 +17,7 @@
 .card .row {
     padding: 2%;
 }
+
+#delete-form {
+    display: inline;
+}

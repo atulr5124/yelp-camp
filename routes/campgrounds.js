@@ -51,6 +51,39 @@ router.get("/:id", function(req, res) {
 	});
 });
 
+// EDIT campground route
+router.get("/:id/edit", function(req, res) {
+	Campground.findById(req.params.id, function(err, foundCampground) {
+		if(err) {
+			res.send(err);
+		} else {
+			res.render("campgrounds/edit", {campground: foundCampground});
+		}
+	});
+});
+
+// Update campground route
+router.put("/:id", function(req, res) {
+	Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCampground) {
+		if(err) {
+			res.send(err);
+		} else {
+			res.redirect("/campgrounds/"+req.params.id);
+		}
+	});
+});
+
+// DESTROY campground
+router.delete("/:id", function(req, res) {
+	Campground.findByIdAndRemove(req.params.id, function(err, deleted) {
+		if(err) {
+			res.send(err);
+		} else {
+			res.redirect("/campgrounds");
+		}
+	});
+});
+
 // Middleware - checks for login
 function isLoggedIn(req, res, next) {
 	if(req.isAuthenticated()) {

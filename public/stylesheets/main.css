@@ -18,6 +18,6 @@
     padding: 2%;
 }
 
-#delete-form {
+.delete-form {
     display: inline;
 }

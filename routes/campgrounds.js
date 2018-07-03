@@ -5,13 +5,31 @@ var middleware = require("../middleware");
 
 // INDEX - show all campgrounds
 router.get("/", function(req, res) {
-	Campground.find({}, function(err, allcampgrounds) {
-		if(err) {
-			console.log(err);
-		} else {
-			res.render("campgrounds/index",{campgrounds:allcampgrounds});
-		}
-	});
+	if(req.query.search) {
+		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+		Campground.find({name: regex}, function(err, allcampgrounds) {
+			if(err) {
+				console.log(err);
+			} else {
+				if(allcampgrounds.length < 1) {
+					var nomatch = "No campgrounds found with query "+req.query.search+".";
+					req.query.search = "";
+					req.flash("error", nomatch);
+					res.redirect("/campgrounds");
+				} else {
+					res.render("campgrounds/index",{campgrounds:allcampgrounds});
+				}
+			}
+		});
+	} else {
+		Campground.find({}, function(err, allcampgrounds) {
+			if(err) {
+				console.log(err);
+			} else {
+				res.render("campgrounds/index",{campgrounds:allcampgrounds});
+			}
+		});
+	}
 });
 
 // CREATE - add new campground to database
@@ -78,6 +96,10 @@ router.delete("/:id", middleware.campgroundAuthorization, function(req, res) {
 		res.redirect("/campgrounds");
 	});
 });
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 module.exports = router;
  
